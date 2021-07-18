@@ -83,3 +83,11 @@ install: ensure_cmake install_build ;
 
 clean:
 	rm -rf build
+
+docker_build:
+	docker build . -t vowpal-wabbit:module
+	docker run -v $(PWD):/vowpal_wabbit/ -w /vowpal_wabbit/ vowpal-wabbit:module python3 setup.py develop
+
+docker_run:
+	docker run -it -v $(PWD):/vowpal_wabbit/ -w /vowpal_wabbit/ vowpal-wabbit:module \
+		sh -c "python3 setup.py install && /bin/bash"
